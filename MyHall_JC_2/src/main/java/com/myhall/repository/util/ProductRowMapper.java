@@ -12,11 +12,18 @@ public class ProductRowMapper implements RowMapper<Product>{
 	@Override
 	public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
        Product product = new Product();
-       product.setProductId(rs.getInt(1));
-       product.setProductName(rs.getString(2));
-       product.setProductImage(rs.getString(3));
+
 		
+       if(rs==null) {
+           return null;
+       } else
+       {
+           product.setProductId(rs.getInt(1));
+           product.setProductName(rs.getString(2));
+           product.setProductImage(rs.getString(3));
+           return product;
+           
+       }
 		
-		return product;
 	}
 }

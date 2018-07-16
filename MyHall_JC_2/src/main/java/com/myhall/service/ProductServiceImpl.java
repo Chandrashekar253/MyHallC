@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myhall.model.Product;
+import com.myhall.model.ProductDetails;
+import com.myhall.model.ProductList;
+import com.myhall.model.UserLogin;
+import com.myhall.model.UserRegistration;
 import com.myhall.repository.ProductRepository;
 
 @Service("productService")
@@ -22,6 +26,26 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getSubCategories(String category) {
 		return productRepository.getSubCategories(category);	
+	}
+	
+	@Override
+	public List<ProductList> getproductList(){		
+		return productRepository.getProductsList();
+	}
+	
+	@Override
+	public List<ProductDetails> getDetails(int id){
+		return productRepository.getDetails(id);
+	}
+	
+	@Override 
+	public boolean loginCheck(UserLogin user) {
+		return productRepository.loginCheck(user);
+	}
+	
+	@Override
+	public int registration(UserRegistration register) {
+		return productRepository.registration(register);
 	}
 }
 
