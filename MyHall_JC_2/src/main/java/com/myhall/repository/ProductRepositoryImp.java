@@ -27,16 +27,14 @@ public class ProductRepositoryImp implements ProductRepository {
 	@Autowired
 	public JdbcTemplate jdbcTemplate;
 
-	HttpSession subcat = null;
+	@Autowired
+	public HttpSession subcat;
 
-	
+	public String category;
 	@Override
 	public List<Product> getProducts() {
-
 		String sql = "select * from Products";
 		List<Product> products = jdbcTemplate.query(sql, new ProductRowMapper());
-		// query(sql, new ProductRowMapper());
-
 		return products;
 
 	}
@@ -52,15 +50,19 @@ public class ProductRepositoryImp implements ProductRepository {
 
 	@Override
 	public List<ProductList> getProductsList() {
+
 		try {
-	   String subCategory=(String)subcat.getAttribute("subCatSession");
-	   System.out.println(subCategory);
+		 category=(String) subcat.getAttribute("subCatSession");
+	 //  String subCategory=(String)subcat.getAttribute("subCatSession");
+	  System.out.println(category);
 }
 		catch (NullPointerException e00) {
 			System.out.println(" Null exception");
 		
 	   }
-		String sql = "select * from Halls";
+		//System.out.println("Subcategory Session"+ subCategoryObj);
+		String sql = "select * from "+category+" ";
+		System.out.println(sql);
 		List<ProductList> productsList = jdbcTemplate.query(sql, new ListRowmampper());
 		return productsList;
 	}
@@ -76,7 +78,6 @@ public class ProductRepositoryImp implements ProductRepository {
 	@Override
 	public boolean loginCheck(UserLogin user) {
  
-
 		String username = user.getUserName();
 		String password = user.getPassword();
 		Object usersdata[] = { username, password };

@@ -25,6 +25,7 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	public HttpSession subCatSession;
 	
 //	@RequestMapping(value="/products", method= RequestMethod.GET)
 //	public @ResponseBody List<Product> getAllProducts(){
@@ -36,7 +37,7 @@ public class ProductController {
 	    public ResponseEntity<List<Product>> getAllProducts2() {
 	        List<Product> prod = productService.getProducts();
 	        if(prod.isEmpty()){
-	            return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+	            return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);// 
 	        }
 	        return new ResponseEntity<List<Product>>(prod, HttpStatus.OK);
 	    }
@@ -44,22 +45,23 @@ public class ProductController {
 	 @RequestMapping(value = "/subcategories/{category}", method = RequestMethod.POST)
 	    public ResponseEntity<List<Product>> getsubCategories(@PathVariable("category") String category, HttpSession subCatSession) {
 	        List<Product> prod = productService.getSubCategories(category);
-	        System.out.println(prod);
+	        //System.out.println(prod);
 	        subCatSession.setAttribute("subCatSession", category);
-			System.out.println(subCatSession.getAttribute("subCatSession"));
+			System.out.println("Category session :"+subCatSession.getAttribute("subCatSession"));
 
 	        if(prod.isEmpty()){
 	        	System.out.println("Null Catched");
-	            return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+	            return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);// 
 	        }
 	        return new ResponseEntity<List<Product>>(prod, HttpStatus.OK);
 	    }
 	 
 	 @RequestMapping(value = "/hallslist", method = RequestMethod.GET)
 	    public ResponseEntity<List<ProductList>> getAllProductsList() {
+		// System.out.println(subCatSession.getAttribute("subCatSession"));
 	        List<ProductList> prod = productService.getproductList();
 	        if(prod.isEmpty()){
-	            return new ResponseEntity<List<ProductList>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+	            return new ResponseEntity<List<ProductList>>(HttpStatus.NO_CONTENT);// 
 	        }
 	        return new ResponseEntity<List<ProductList>>(prod, HttpStatus.OK);
 	    }
@@ -69,7 +71,7 @@ public class ProductController {
 	        List<ProductDetails> prod = productService.getDetails(id);
 	        System.out.println(prod);
 	        if(prod.isEmpty()){
-	            return new ResponseEntity<List<ProductDetails>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+	            return new ResponseEntity<List<ProductDetails>>(HttpStatus.NO_CONTENT);// 
 	        }
 	        return new ResponseEntity<List<ProductDetails>>(prod, HttpStatus.OK);
 	    }
